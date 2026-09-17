@@ -1,2 +1,2 @@
-# Interneto-Technologijos
+# Internet-Technologies
 Repository for all the lab. works and tasks for internet technologies.
