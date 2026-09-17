@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dealership xmlns:car="car"
+            xmlns:moto="motorcycle">
+
+    <car:car id="1", come-in-date="2023-01-15">
+        <car:make>Volkswagen</car:make>
+        <car:model>Golf</car:model>
+        <car:year>2018</car:year>
+        <car:mileage>98000km</car:mileage>
+        <car:price>13900$</car:price>
+        <car:color>Silver</car:color>
+        <car:doors>4</car:doors>
+    </car:car>
+
+    <moto:motorcycle id="1", come-in-date="2023-01-15">
+        <moto:make>Ducati</moto:make>
+        <moto:model>Monster 797</moto:model>
+        <moto:year>2018</moto:year>
+        <moto:mileage>15800km</moto:mileage>
+        <moto:price>6700$</moto:price>
+        <moto:color>Yellow</moto:color>
+    </moto:motorcycle>
+
+</dealership>

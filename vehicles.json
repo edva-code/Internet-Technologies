@@ -1,0 +1,29 @@
+{
+  "dealership": {
+    "cars": [
+      {
+        "id": 1,
+        "come-in-date": "2023-01-15",
+        "make": "Volkswagen",
+        "model": "Golf",
+        "year": 2018,
+        "mileage": "98000km",
+        "price": "13900$",
+        "color": "Silver",
+        "doors": 4
+      }
+    ],
+    "motorcycles": [
+      {
+        "id": 1,
+        "come-in-date": "2023-01-15",
+        "make": "Ducati",
+        "model": "Monster 797",
+        "year": 2018,
+        "mileage": "15800km",
+        "price": "6700$",
+        "color": "Yellow"
+      }
+    ]
+  }
+}
