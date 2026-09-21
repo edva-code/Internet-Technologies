@@ -1,23 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dealership xmlns:car="car"
+<dealership xmlns="dealership-common"
+            xmlns:car="car"
             xmlns:moto="motorcycle">
 
-    <car:car id="1", come-in-date="2023-01-15">
+    <car:car id="c1" certified="true">
         <car:make>Volkswagen</car:make>
         <car:model>Golf</car:model>
-        <car:year>2018</car:year>
-        <car:mileage>98000km</car:mileage>
-        <car:price>13900$</car:price>
+        <car:year>2015</car:year>
+        <car:mileage>98000</car:mileage>
+        <car:price currency="EUR">13900.90</car:price>
+        <arrival-date>2026-02-10</arrival-date>
+        <engine>
+            <type>Diesel</type>
+            <horsepower>150</horsepower>
+            <displacement>2.0</displacement>
+        </engine>
+        <features>
+            <feature>Air Conditioning</feature>
+            <feature>Bluetooth</feature>
+            <feature>Backup Camera</feature>
+        </features>
         <car:color>Silver</car:color>
         <car:doors>4</car:doors>
     </car:car>
 
-    <moto:motorcycle id="1", come-in-date="2023-01-15">
+    <moto:motorcycle id="m1" certified="false">
         <moto:make>Ducati</moto:make>
         <moto:model>Monster 797</moto:model>
         <moto:year>2018</moto:year>
-        <moto:mileage>15800km</moto:mileage>
-        <moto:price>6700$</moto:price>
+        <moto:mileage>15800</moto:mileage>
+        <moto:price currency="EUR">6700.00</moto:price>
+        <arrival-date>2026-02-10</arrival-date>
+        <engine>
+            <type>Petrol</type>
+            <horsepower>73</horsepower>
+            <displacement>0.803</displacement>
+        </engine>
+        <features>
+            <feature>ABS</feature>
+            <feature>LED Lighting</feature>
+        </features>
         <moto:color>Yellow</moto:color>
     </moto:motorcycle>
 

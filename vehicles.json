@@ -2,26 +2,46 @@
   "dealership": {
     "cars": [
       {
-        "id": 1,
-        "come-in-date": "2023-01-15",
+        "id": "c1",
+        "certified": true,
         "make": "Volkswagen",
         "model": "Golf",
-        "year": 2018,
-        "mileage": "98000km",
-        "price": "13900$",
+        "year": 2015,
+        "mileage": 98000,
+        "price": {
+          "currency": "EUR",
+          "value": 13900.90
+        },
+        "arrival-date": "2026-02-10",
+        "engine": {
+          "type": "Diesel",
+          "horsepower": 150,
+          "displacement": 2.0
+        },
+        "features": ["Air Conditioning", "Bluetooth", "Backup Camera"],
         "color": "Silver",
         "doors": 4
       }
     ],
     "motorcycles": [
       {
-        "id": 1,
-        "come-in-date": "2023-01-15",
+        "id": "m1",
+        "certified": false,
         "make": "Ducati",
         "model": "Monster 797",
         "year": 2018,
-        "mileage": "15800km",
-        "price": "6700$",
+        "mileage": 15800,
+        "price": {
+          "currency": "EUR",
+          "value": 6700.00
+        },
+        "arrival-date": "2026-02-10",
+        "engine": {
+          "type": "Petrol",
+          "horsepower": 73,
+          "displacement": 0.803
+        },
+        "features": ["ABS", "LED Lighting"],
         "color": "Yellow"
       }
     ]
