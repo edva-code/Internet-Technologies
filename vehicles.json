@@ -3,7 +3,7 @@
     "cars": [
       {
         "id": "c1",
-        "certified": true,
+        "arrival_date": "2023-05-10",
         "make": "Volkswagen",
         "model": "Golf",
         "year": 2015,
@@ -12,7 +12,6 @@
           "currency": "EUR",
           "value": 13900.90
         },
-        "arrival-date": "2026-02-10",
         "engine": {
           "type": "Diesel",
           "horsepower": 150,
@@ -21,12 +20,32 @@
         "features": ["Air Conditioning", "Bluetooth", "Backup Camera"],
         "color": "Silver",
         "doors": 4
+      },
+      {
+        "id": "c2",
+        "arrival_date": "2023-08-02",
+        "make": "Toyota",
+        "model": "Corolla",
+        "year": 2019,
+        "mileage": 54000,
+        "price": {
+          "currency": "EUR",
+          "value": 16450.50
+        },
+        "engine": {
+          "type": "Petrol",
+          "horsepower": 132,
+          "displacement": 1.8
+        },
+        "features": ["Air Conditioning", "Lane Assist"],
+        "color": "White",
+        "doors": 4
       }
     ],
     "motorcycles": [
       {
         "id": "m1",
-        "certified": false,
+        "arrival_date": "2023-06-15",
         "make": "Ducati",
         "model": "Monster 797",
         "year": 2018,
@@ -35,7 +54,6 @@
           "currency": "EUR",
           "value": 6700.00
         },
-        "arrival-date": "2026-02-10",
         "engine": {
           "type": "Petrol",
           "horsepower": 73,

@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dealership xmlns="dealership-common"
-            xmlns:car="car"
-            xmlns:moto="motorcycle">
+<dealership xmlns="http://example.com/dealership-common"
+            xmlns:car="http://example.com/car"
+            xmlns:moto="http://example.com/motorcycle">
 
-    <car:car id="c1" certified="true">
+    <car:car id="c1" arrival-date="2023-05-10">
         <car:make>Volkswagen</car:make>
         <car:model>Golf</car:model>
         <car:year>2015</car:year>
         <car:mileage>98000</car:mileage>
         <car:price currency="EUR">13900.90</car:price>
-        <arrival-date>2026-02-10</arrival-date>
         <engine>
             <type>Diesel</type>
             <horsepower>150</horsepower>
@@ -24,13 +23,31 @@
         <car:doors>4</car:doors>
     </car:car>
 
-    <moto:motorcycle id="m1" certified="false">
+    <car:car id="c2" arrival-date="2023-08-02">
+        <car:make>Toyota</car:make>
+        <car:model>Corolla</car:model>
+        <car:year>2019</car:year>
+        <car:mileage>54000</car:mileage>
+        <car:price currency="EUR">16450.50</car:price>
+        <engine>
+            <type>Petrol</type>
+            <horsepower>132</horsepower>
+            <displacement>1.8</displacement>
+        </engine>
+        <features>
+            <feature>Air Conditioning</feature>
+            <feature>Lane Assist</feature>
+        </features>
+        <car:color>White</car:color>
+        <car:doors>4</car:doors>
+    </car:car>
+
+    <moto:motorcycle id="m1" arrival-date="2023-06-15">
         <moto:make>Ducati</moto:make>
         <moto:model>Monster 797</moto:model>
         <moto:year>2018</moto:year>
         <moto:mileage>15800</moto:mileage>
         <moto:price currency="EUR">6700.00</moto:price>
-        <arrival-date>2026-02-10</arrival-date>
         <engine>
             <type>Petrol</type>
             <horsepower>73</horsepower>
