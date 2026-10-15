@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://example.com/dealership-common"
+           xmlns:car="http://example.com/car"
+           xmlns:moto="http://example.com/motorcycle"
+           targetNamespace="http://example.com/dealership-common"
+           elementFormDefault="qualified">
+
+    <xs:import namespace="http://example.com/car" schemaLocation="car.xsd"/>
+    <xs:import namespace="http://example.com/motorcycle" schemaLocation="motorcycle.xsd"/>
+
+    <xs:element name="dealership">
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="car:vehicle"/>
+                <xs:element ref="moto:vehicle"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="engine">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="type" type="fuelType"/>
+                <xs:element name="horsepower" type="xs:positiveInteger"/>
+                <xs:element name="displacement" type="xs:decimal"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="features">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="feature" type="xs:string" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="fuelType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Petrol"/>
+            <xs:enumeration value="Diesel"/>
+            <xs:enumeration value="Electric"/>
+            <xs:enumeration value="Hybrid"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="priceType">
+        <xs:simpleContent>
+            <xs:extension base="xs:decimal">
+                <xs:attribute name="currency" use="required">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:pattern value="[A-Z]{3}"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+</xs:schema>
