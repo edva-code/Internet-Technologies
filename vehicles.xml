@@ -3,7 +3,7 @@
             xmlns:car="http://example.com/car"
             xmlns:moto="http://example.com/motorcycle">
 
-    <car:car id="c1" arrival-date="2023-05-10">
+    <car:vehicle id="c1" arrival-date="2023-05-10">
         <car:make>Volkswagen</car:make>
         <car:model>Golf</car:model>
         <car:year>2015</car:year>
@@ -21,9 +21,9 @@
         </features>
         <car:color>Silver</car:color>
         <car:doors>4</car:doors>
-    </car:car>
+    </car:vehicle>
 
-    <car:car id="c2" arrival-date="2023-08-02">
+    <car:vehicle id="c2" arrival-date="2023-08-02">
         <car:make>Toyota</car:make>
         <car:model>Corolla</car:model>
         <car:year>2019</car:year>
@@ -40,9 +40,9 @@
         </features>
         <car:color>White</car:color>
         <car:doors>4</car:doors>
-    </car:car>
+    </car:vehicle>
 
-    <moto:motorcycle id="m1" arrival-date="2023-06-15">
+    <moto:vehicle id="m1" arrival-date="2023-06-15">
         <moto:make>Ducati</moto:make>
         <moto:model>Monster 797</moto:model>
         <moto:year>2018</moto:year>
@@ -58,6 +58,6 @@
             <feature>LED Lighting</feature>
         </features>
         <moto:color>Yellow</moto:color>
-    </moto:motorcycle>
+    </moto:vehicle>
 
 </dealership>
