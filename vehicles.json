@@ -19,7 +19,11 @@
         },
         "features": ["Air Conditioning", "Bluetooth", "Backup Camera"],
         "color": "Silver",
-        "doors": 4
+        "doors": 4,
+        "fuel_consumption": {
+          "unit": "l/100km",
+          "values": [5.9, 4.2, 4.8]
+        }
       },
       {
         "id": "c2",
@@ -39,7 +43,12 @@
         },
         "features": ["Air Conditioning", "Lane Assist"],
         "color": "White",
-        "doors": 4
+        "doors": 4,
+        "fuel_consumption": {
+          "unit": "l/100km",
+          "values": [7.8, 5.6, 6.4]
+        },
+        "description": "Newer than the Golf (c1) and with lower mileage."
       }
     ],
     "motorcycles": [
@@ -60,7 +69,11 @@
           "displacement": 0.803
         },
         "features": ["ABS", "LED Lighting"],
-        "color": "Yellow"
+        "color": "Yellow",
+        "fuel_consumption": {
+          "unit": "l/100km",
+          "values": [6.0, 4.6, 5.2]
+        }
       }
     ]
   }

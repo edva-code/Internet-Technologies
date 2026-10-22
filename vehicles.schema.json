@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://example.com/vehicles.schema.json",
+  "title": "Vehicle dealership",
+  "type": "object",
+  "required": ["dealership"],
+  "properties": {
+    "dealership": {
+      "type": "object",
+      "properties": {
+        "cars": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/car" }
+        },
+        "motorcycles": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/motorcycle" }
+        }
+      },
+      "additionalProperties": false,
+      "anyOf": [
+        { "required": ["cars"] },
+        { "required": ["motorcycles"] }
+      ]
+    }
+  },
+  "definitions": {
+    "price": {
+      "type": "object",
+      "required": ["currency", "value"],
+      "properties": {
+        "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+        "value": { "type": "number", "exclusiveMinimum": 0 },
+        "discount": { "type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 100 }
+      }
+    },
+    "engine": {
+      "type": "object",
+      "required": ["type", "horsepower", "displacement"],
+      "properties": {
+        "type": { "enum": ["Petrol", "Diesel", "Electric", "Hybrid"] },
+        "horsepower": { "type": "integer", "minimum": 1 },
+        "displacement": { "type": "number", "minimum": 0 }
+      },
+      "oneOf": [
+        {
+          "description": "Electric engines have no displacement.",
+          "properties": { "type": { "const": "Electric" }, "displacement": { "const": 0 } }
+        },
+        {
+          "description": "Combustion and hybrid engines have a displacement.",
+          "properties": { "type": { "enum": ["Petrol", "Diesel", "Hybrid"] }, "displacement": { "exclusiveMinimum": 0 } }
+        }
+      ]
+    },
+    "fuelConsumption": {
+      "description": "Fuel consumption in order: town, highway, mixed.",
+      "type": "object",
+      "required": ["unit", "values"],
+      "properties": {
+        "unit": { "enum": ["l/100km"] },
+        "values": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "type": "number", "minimum": 0, "maximum": 50 }
+        }
+      }
+    },
+    "vehicleBase": {
+      "type": "object",
+      "required": ["id", "arrival_date", "make", "model", "year", "mileage", "price", "engine", "color"],
+      "properties": {
+        "id": { "type": "string" },
+        "arrival_date": { "type": "string", "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$" },
+        "make": { "type": "string", "minLength": 1 },
+        "model": { "type": "string", "minLength": 1 },
+        "year": { "type": "integer", "minimum": 1886 },
+        "mileage": { "type": "integer", "minimum": 0 },
+        "price": { "$ref": "#/definitions/price" },
+        "engine": { "$ref": "#/definitions/engine" },
+        "features": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "color": { "type": "string", "minLength": 1 },
+        "fuel_consumption": { "$ref": "#/definitions/fuelConsumption" },
+        "description": { "type": "string" }
+      }
+    },
+    "car": {
+      "allOf": [
+        { "$ref": "#/definitions/vehicleBase" },
+        {
+          "required": ["doors"],
+          "properties": {
+            "id": { "pattern": "^c[0-9]+$" },
+            "doors": { "type": "integer", "minimum": 2, "maximum": 5 }
+          }
+        }
+      ]
+    },
+    "motorcycle": {
+      "allOf": [
+        { "$ref": "#/definitions/vehicleBase" },
+        { "properties": { "id": { "pattern": "^m[0-9]+$" } } }
+      ]
+    }
+  }
+}
