@@ -28,20 +28,28 @@
         <xs:complexContent>
             <xs:extension base="carBaseType">
                 <xs:sequence>
-                    <xs:element name="doors">
-                        <xs:simpleType>
-                            <xs:restriction base="xs:integer">
-                                <xs:minInclusive value="2"/>
-                                <xs:maxInclusive value="5"/>
-                            </xs:restriction>
-                        </xs:simpleType>
-                    </xs:element>
+                    <xs:element name="doors" type="doorsType"/>
                     <xs:element name="fuel-consumption" type="common:fuelConsumptionType" minOccurs="0"/>
+                    <xs:element ref="common:description" minOccurs="0"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
 
+    <xs:simpleType name="doorsType">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="2"/>
+            <xs:maxInclusive value="5"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!--
+        Restriction principle violation (does not compile):
+        <xs:element name="mileage" type="xs:nonNegativeInteger" minOccurs="0"/>
+        carBaseType requires mileage, so making it optional would accept a car
+        without mileage, which carBaseType rejects. A restriction may only narrow
+        its base. Fix: keep mileage required and narrow it instead (fixed="0" below).
+    -->
     <xs:complexType name="newCarBaseType">
         <xs:annotation>
             <xs:documentation>A new car: no mileage and features must be listed.</xs:documentation>

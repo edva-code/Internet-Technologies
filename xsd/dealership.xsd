@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns="http://example.com/dealership-common"
+           xmlns:common="http://example.com/dealership-common"
            xmlns:car="http://example.com/car"
            xmlns:moto="http://example.com/motorcycle"
            targetNamespace="http://example.com/dealership-common"
@@ -9,32 +10,60 @@
     <xs:import namespace="http://example.com/car" schemaLocation="car.xsd"/>
     <xs:import namespace="http://example.com/motorcycle" schemaLocation="motorcycle.xsd"/>
 
-    <xs:element name="dealership">
-        <xs:complexType>
-            <xs:choice minOccurs="0" maxOccurs="unbounded">
-                <xs:element ref="car:vehicle"/>
-                <xs:element ref="moto:vehicle"/>
-            </xs:choice>
-        </xs:complexType>
+    <xs:element name="dealership" type="dealershipType">
+        <xs:key name="vehicleKey">
+            <xs:selector xpath="car:vehicle|moto:vehicle"/>
+            <xs:field xpath="@id"/>
+        </xs:key>
+        <xs:keyref name="vehicleRefKey" refer="vehicleKey">
+            <xs:selector xpath=".//common:vehicle-ref"/>
+            <xs:field xpath="@vehicle"/>
+        </xs:keyref>
     </xs:element>
 
-    <xs:element name="engine">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="type" type="fuelType"/>
-                <xs:element name="horsepower" type="xs:positiveInteger"/>
-                <xs:element name="displacement" type="xs:decimal"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+    <xs:complexType name="dealershipType">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="car:vehicle"/>
+            <xs:element ref="moto:vehicle"/>
+        </xs:choice>
+    </xs:complexType>
 
-    <xs:element name="features">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="feature" type="xs:string" maxOccurs="unbounded"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+    <xs:element name="engine" type="engineType"/>
+
+    <xs:complexType name="engineType">
+        <xs:sequence>
+            <xs:element name="type" type="fuelType"/>
+            <xs:element name="horsepower" type="xs:positiveInteger"/>
+            <xs:element name="displacement" type="xs:decimal"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="features" type="featuresType"/>
+
+    <xs:complexType name="featuresType">
+        <xs:sequence>
+            <xs:element name="feature" type="xs:string" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="description" type="descriptionType"/>
+
+    <xs:complexType name="descriptionType" mixed="true">
+        <xs:annotation>
+            <xs:documentation>Free text that can link to other vehicles in the dealership.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="vehicle-ref" type="vehicleRefType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="vehicleRefType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="vehicle" type="xs:NCName" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
 
     <xs:simpleType name="fuelType">
         <xs:restriction base="xs:string">
@@ -48,16 +77,16 @@
     <xs:complexType name="priceType">
         <xs:simpleContent>
             <xs:extension base="xs:decimal">
-                <xs:attribute name="currency" use="required">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:pattern value="[A-Z]{3}"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:attribute>
+                <xs:attribute name="currency" type="currencyType" use="required"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
+    <xs:simpleType name="currencyType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z]{3}"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="positivePriceType">
         <xs:simpleContent>
@@ -91,14 +120,15 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="consumptionValuesType">
+        <xs:list itemType="consumptionValueType"/>
+    </xs:simpleType>
+
     <xs:simpleType name="consumptionListType">
         <xs:annotation>
             <xs:documentation>Fuel consumption in order: town, highway, mixed.</xs:documentation>
         </xs:annotation>
-        <xs:restriction>
-            <xs:simpleType>
-                <xs:list itemType="consumptionValueType"/>
-            </xs:simpleType>
+        <xs:restriction base="consumptionValuesType">
             <xs:length value="3"/>
         </xs:restriction>
     </xs:simpleType>

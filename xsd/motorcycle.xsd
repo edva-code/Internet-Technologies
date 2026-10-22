@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://example.com/motorcycle"
            xmlns:common="http://example.com/dealership-common"
            targetNamespace="http://example.com/motorcycle"
            elementFormDefault="qualified">
 
     <xs:import namespace="http://example.com/dealership-common" schemaLocation="dealership.xsd"/>
 
-    <xs:element name="vehicle">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="make" type="xs:string"/>
-                <xs:element name="model" type="xs:string"/>
-                <xs:element name="year" type="xs:gYear"/>
-                <xs:element name="mileage" type="xs:nonNegativeInteger"/>
-                <xs:element name="price" type="common:vehiclePriceType"/>
-                <xs:element ref="common:engine"/>
-                <xs:element ref="common:features" minOccurs="0"/>
-                <xs:element name="color" type="xs:string"/>
-                <xs:element name="fuel-consumption" type="common:fuelConsumptionType" minOccurs="0"/>
-            </xs:sequence>
-            <xs:attribute name="id" type="xs:ID" use="required"/>
-            <xs:attribute name="arrival-date" type="xs:date" use="required"/>
-        </xs:complexType>
-    </xs:element>
+    <xs:element name="vehicle" type="motorcycleType"/>
+
+    <xs:complexType name="motorcycleType">
+        <xs:sequence>
+            <xs:element name="make" type="xs:string"/>
+            <xs:element name="model" type="xs:string"/>
+            <xs:element name="year" type="xs:gYear"/>
+            <xs:element name="mileage" type="xs:nonNegativeInteger"/>
+            <xs:element name="price" type="common:vehiclePriceType"/>
+            <xs:element ref="common:engine"/>
+            <xs:element ref="common:features" minOccurs="0"/>
+            <xs:element name="color" type="xs:string"/>
+            <xs:element name="fuel-consumption" type="common:fuelConsumptionType" minOccurs="0"/>
+            <xs:element ref="common:description" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
+        <xs:attribute name="arrival-date" type="xs:date" use="required"/>
+    </xs:complexType>
 
 </xs:schema>
