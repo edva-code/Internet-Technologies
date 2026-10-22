@@ -13,7 +13,7 @@
                 <xs:element name="model" type="xs:string"/>
                 <xs:element name="year" type="xs:gYear"/>
                 <xs:element name="mileage" type="xs:nonNegativeInteger"/>
-                <xs:element name="price" type="common:priceType"/>
+                <xs:element name="price" type="common:vehiclePriceType"/>
                 <xs:element ref="common:engine"/>
                 <xs:element ref="common:features" minOccurs="0"/>
                 <xs:element name="color" type="xs:string"/>

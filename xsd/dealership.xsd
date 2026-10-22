@@ -59,6 +59,30 @@
         </xs:simpleContent>
     </xs:complexType>
 
+    <xs:complexType name="positivePriceType">
+        <xs:simpleContent>
+            <xs:restriction base="priceType">
+                <xs:minExclusive value="0"/>
+                <xs:fractionDigits value="2"/>
+            </xs:restriction>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="discountType">
+        <xs:restriction base="xs:decimal">
+            <xs:minExclusive value="0"/>
+            <xs:maxExclusive value="100"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="vehiclePriceType">
+        <xs:simpleContent>
+            <xs:extension base="positivePriceType">
+                <xs:attribute name="discount" type="discountType"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
     <xs:simpleType name="consumptionValueType">
         <xs:restriction base="xs:decimal">
             <xs:minInclusive value="0"/>
