@@ -59,4 +59,32 @@
         </xs:simpleContent>
     </xs:complexType>
 
+    <xs:simpleType name="consumptionValueType">
+        <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="50"/>
+            <xs:fractionDigits value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="consumptionListType">
+        <xs:annotation>
+            <xs:documentation>Fuel consumption in order: town, highway, mixed.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction>
+            <xs:simpleType>
+                <xs:list itemType="consumptionValueType"/>
+            </xs:simpleType>
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="fuelConsumptionType">
+        <xs:simpleContent>
+            <xs:extension base="consumptionListType">
+                <xs:attribute name="unit" type="xs:string" use="required" fixed="l/100km"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
 </xs:schema>

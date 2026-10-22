@@ -21,6 +21,7 @@
         </features>
         <car:color>Silver</car:color>
         <car:doors>4</car:doors>
+        <car:fuel-consumption unit="l/100km">5.9 4.2 4.8</car:fuel-consumption>
     </car:vehicle>
 
     <car:vehicle id="c2" arrival-date="2023-08-02">
@@ -40,6 +41,7 @@
         </features>
         <car:color>White</car:color>
         <car:doors>4</car:doors>
+        <car:fuel-consumption unit="l/100km">7.8 5.6 6.4</car:fuel-consumption>
     </car:vehicle>
 
     <moto:vehicle id="m1" arrival-date="2023-06-15">
@@ -58,6 +60,7 @@
             <feature>LED Lighting</feature>
         </features>
         <moto:color>Yellow</moto:color>
+        <moto:fuel-consumption unit="l/100km">6.0 4.6 5.2</moto:fuel-consumption>
     </moto:vehicle>
 
 </dealership>
