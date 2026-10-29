@@ -7,9 +7,12 @@
            targetNamespace="http://example.com/dealership-common"
            elementFormDefault="qualified">
 
+    <!-- 9. Visi jūsų susikurti tipai turi priklausyti jūsų vardų sričiai (targetNamespace) -->
+
     <xs:import namespace="http://example.com/car" schemaLocation="car.xsd"/>
     <xs:import namespace="http://example.com/motorcycle" schemaLocation="motorcycle.xsd"/>
 
+    <!-- 8. Bent viena nuoroda (keyref) į unikalumo ribojimą (unique) arba raktą (key) -->
     <xs:element name="dealership" type="dealershipType">
         <xs:key name="vehicleKey">
             <xs:selector xpath="car:vehicle|moto:vehicle"/>
@@ -21,6 +24,7 @@
         </xs:keyref>
     </xs:element>
 
+    <!-- 7. choice valdymo struktūra -->
     <xs:complexType name="dealershipType">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
             <xs:element ref="car:vehicle"/>
@@ -48,6 +52,7 @@
 
     <xs:element name="description" type="descriptionType"/>
 
+    <!-- 6. Sudėtingas tipas su mišriu turiniu -->
     <xs:complexType name="descriptionType" mixed="true">
         <xs:annotation>
             <xs:documentation>Free text that can link to other vehicles in the dealership.</xs:documentation>
@@ -65,6 +70,7 @@
         </xs:simpleContent>
     </xs:complexType>
 
+    <!-- 1. Paprastas tipas, apribojantis kokį nors Schema standartinį tipą -->
     <xs:simpleType name="fuelType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="Petrol"/>
@@ -74,6 +80,7 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <!-- 3. Bazinis tipas sudėtingiems tipams su paprastu turiniu -->
     <xs:complexType name="priceType">
         <xs:simpleContent>
             <xs:extension base="xs:decimal">
@@ -88,6 +95,7 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <!-- 3.1. Sudėtingas tipas su paprastu turiniu, išvestas apribojimu (restriction) iš jūsų (ne XML Schema) bazinio tipo -->
     <xs:complexType name="positivePriceType">
         <xs:simpleContent>
             <xs:restriction base="priceType">
@@ -104,6 +112,7 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <!-- 3.2. Sudėtingas tipas su paprastu turiniu, išvestas praplėtimu (extension) iš jūsų bazinio tipo -->
     <xs:complexType name="vehiclePriceType">
         <xs:simpleContent>
             <xs:extension base="positivePriceType">
@@ -120,6 +129,7 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <!-- 2. Prasmingas sąrašo tipas (list type) -->
     <xs:simpleType name="consumptionValuesType">
         <xs:list itemType="consumptionValueType"/>
     </xs:simpleType>

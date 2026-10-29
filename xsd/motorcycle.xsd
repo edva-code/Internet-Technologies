@@ -5,6 +5,8 @@
            targetNamespace="http://example.com/motorcycle"
            elementFormDefault="qualified">
 
+    <!-- 9. Visi jūsų susikurti tipai turi priklausyti jūsų vardų sričiai (targetNamespace) -->
+
     <xs:import namespace="http://example.com/dealership-common" schemaLocation="dealership.xsd"/>
 
     <xs:element name="vehicle" type="motorcycleType"/>
