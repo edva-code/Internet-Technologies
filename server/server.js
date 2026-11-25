@@ -1,4 +1,6 @@
 import express from 'express';
+import Ajv from 'ajv';
+import draft06 from 'ajv/dist/refs/json-schema-draft-06.json' with { type: 'json' };
 import { readFileSync, writeFileSync, renameSync, existsSync, copyFileSync } from 'node:fs';
 
 // Working copy of the data, so the Lab 2 vehicles.json stays untouched. Delete db.json to reset.
@@ -13,12 +15,34 @@ function save() {
   renameSync(DB_TMP, DB);
 }
 
-const resources = { cars: 'c', motorcycles: 'm' }; // collection name -> id prefix
+// Lab 2 JSON Schema is draft-06; one item is checked against its car/motorcycle definition.
+const schema = JSON.parse(readFileSync(new URL('../vehicles.schema.json', import.meta.url)));
+const ajv = new Ajv({ allErrors: true, strictTypes: false }) // types come from the allOf base, which strict mode can't see;
+ajv.addMetaSchema(draft06);
+ajv.addSchema(schema);
+const definition = (name) => ajv.getSchema(`${schema.$id}#/definitions/${name}`);
+
+// collection name -> id prefix and validator
+const resources = {
+  cars: { prefix: 'c', validate: definition('car') },
+  motorcycles: { prefix: 'm', validate: definition('motorcycle') },
+};
+
+// Returns 400 with one entry per broken field, e.g. { field: "/price/value", message: "must be > 0" }.
+function invalid(validate, item, res) {
+  if (validate(item)) return false;
+  const details = validate.errors.map((e) => ({
+    field: e.instancePath + (e.params.missingProperty ? `/${e.params.missingProperty}` : ''),
+    message: e.message,
+  }));
+  res.status(400).json({ error: 'Validation failed', details });
+  return true;
+}
 
 const app = express();
 app.use(express.json());
 
-for (const [name, prefix] of Object.entries(resources)) {
+for (const [name, { prefix, validate }] of Object.entries(resources)) {
   const base = `/api/${name}`;
   const list = () => (db[name] ??= []);
   const notFound = (res) => res.status(404).json({ error: `${name} item not found` });
@@ -32,7 +56,8 @@ for (const [name, prefix] of Object.entries(resources)) {
   });
 
   app.post(base, (req, res) => {
-    const item = { ...req.body, id: nextId() };
+    const item = { ...req.body, id: nextId() }; // id is assigned before validation, the schema requires it
+    if (invalid(validate, item, res)) return;
     list().push(item);
     save();
     res.status(201).location(`${base}/${item.id}`).json(item);
@@ -42,6 +67,7 @@ for (const [name, prefix] of Object.entries(resources)) {
     const i = list().findIndex((v) => v.id === req.params.id);
     if (i < 0) return notFound(res);
     const item = { ...req.body, id: req.params.id }; // the URL decides the id, not the body
+    if (invalid(validate, item, res)) return;
     list()[i] = item;
     save();
     res.json(item);
