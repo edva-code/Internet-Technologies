@@ -17,7 +17,7 @@ function save() {
 
 // Lab 2 JSON Schema is draft-06; one item is checked against its car/motorcycle definition.
 const schema = JSON.parse(readFileSync(new URL('../vehicles.schema.json', import.meta.url)));
-const ajv = new Ajv({ allErrors: true, strictTypes: false }) // types come from the allOf base, which strict mode can't see;
+const ajv = new Ajv({ allErrors: true, strictTypes: false }); // types come from the allOf base, which strict mode can't see
 ajv.addMetaSchema(draft06);
 ajv.addSchema(schema);
 const definition = (name) => ajv.getSchema(`${schema.$id}#/definitions/${name}`);
@@ -40,6 +40,14 @@ function invalid(validate, item, res) {
 }
 
 const app = express();
+
+// The API only speaks JSON: 406 if the client won't accept it, 415 if it sends something else.
+app.use('/api', (req, res, next) => {
+  if (!req.accepts('json')) return res.status(406).json({ error: 'Only application/json responses are available' });
+  if (['POST', 'PUT'].includes(req.method) && !req.is('json'))
+    return res.status(415).json({ error: 'Content-Type must be application/json' });
+  next();
+});
 app.use(express.json());
 
 for (const [name, { prefix, validate }] of Object.entries(resources)) {
@@ -81,6 +89,11 @@ for (const [name, { prefix, validate }] of Object.entries(resources)) {
     res.status(204).end();
   });
 }
+
+// Errors as JSON instead of Express's HTML page; malformed JSON bodies arrive here as 400.
+app.use((err, req, res, next) => {
+  res.status(err.status ?? 500).json({ error: err.expose ? err.message : 'Internal server error' });
+});
 
 const port = process.env.PORT ?? 3000;
 app.listen(port, () => console.log(`API on http://localhost:${port}/api`));
