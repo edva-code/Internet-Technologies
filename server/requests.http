@@ -1,0 +1,71 @@
+@base = http://localhost:3000/api
+@json = application/json
+
+### All cars -> 200
+GET {{base}}/cars
+
+### One car -> 200
+GET {{base}}/cars/c1
+
+### Unknown id -> 404
+GET {{base}}/cars/c99
+
+### All motorcycles -> 200
+GET {{base}}/motorcycles
+
+### Create a car -> 201 + Location
+POST {{base}}/cars
+Content-Type: {{json}}
+
+{
+  "arrival_date": "2024-01-15",
+  "make": "Toyota",
+  "model": "Corolla",
+  "year": 2020,
+  "mileage": 40000,
+  "price": { "currency": "EUR", "value": 17500 },
+  "engine": { "type": "Petrol", "horsepower": 120, "displacement": 1.8 },
+  "color": "White",
+  "doors": 4
+}
+
+### Invalid car -> 400 with details per field
+POST {{base}}/cars
+Content-Type: {{json}}
+
+{ "make": "", "year": 1800, "price": { "currency": "EUR", "value": -5 } }
+
+### Replace c3 (created above) -> 200
+PUT {{base}}/cars/c3
+Content-Type: {{json}}
+
+{
+  "arrival_date": "2024-01-15",
+  "make": "Toyota",
+  "model": "Corolla",
+  "year": 2020,
+  "mileage": 40000,
+  "price": { "currency": "EUR", "value": 17500 },
+  "engine": { "type": "Petrol", "horsepower": 120, "displacement": 1.8 },
+  "color": "Red",
+  "doors": 4
+}
+
+### Delete c3 -> 204 (run again -> 404)
+DELETE {{base}}/cars/c3
+
+### Not JSON body -> 415
+POST {{base}}/cars
+Content-Type: text/plain
+
+hello
+
+### Client wants XML -> 406
+GET {{base}}/cars
+Accept: application/xml
+
+### Malformed JSON -> 400
+POST {{base}}/cars
+Content-Type: {{json}}
+
+{ bad
